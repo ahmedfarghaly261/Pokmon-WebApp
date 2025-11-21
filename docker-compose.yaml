@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  # PostgreSQL Database
   db:
     image: postgres:15-alpine
     container_name: pokedex-db
@@ -19,10 +20,12 @@ services:
       retries: 5
     networks:
       - pokedex-network
+    restart: unless-stopped
 
-  app:
+  # Backend API (NestJS)
+  backend:
     build:
-      context: .
+      context: ./BackEnd
       dockerfile: Dockerfile
     container_name: pokedex-backend
     depends_on:
@@ -30,7 +33,7 @@ services:
         condition: service_healthy
     environment:
       NODE_ENV: ${NODE_ENV:-development}
-      PORT: ${PORT:-3000}
+      PORT: ${BACKEND_PORT:-3000}
       DB_HOST: db
       DB_PORT: ${DB_PORT:-5432}
       DB_USER: ${DB_USER:-postgres}
@@ -39,9 +42,9 @@ services:
       DATABASE_URL: postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-postgres}@db:${DB_PORT:-5432}/${DB_NAME:-pokedex}
       TEAM_API_TOKEN: ${TEAM_API_TOKEN:-SECRET123}
     ports:
-      - '${PORT:-3000}:3000'
+      - '${BACKEND_PORT:-3000}:3000'
     volumes:
-      - ./src:/usr/src/app/src
+      - ./BackEnd/src:/usr/src/app/src
       - /usr/src/app/node_modules
     networks:
       - pokedex-network
@@ -51,6 +54,32 @@ services:
       timeout: 10s
       retries: 3
       start_period: 10s
+    restart: unless-stopped
+
+  # Frontend (Vue 3)
+  frontend:
+    build:
+      context: ./FrontEnd
+      dockerfile: Dockerfile
+    container_name: pokedex-frontend
+    depends_on:
+      - backend
+    environment:
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:3000/api}
+    ports:
+      - '${FRONTEND_PORT:-5173}:5173'
+    volumes:
+      - ./FrontEnd/src:/app/src
+      - /app/node_modules
+    networks:
+      - pokedex-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5173"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
 
 volumes:
   pgdata:
