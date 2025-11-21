@@ -139,11 +139,13 @@ npm run preview
 The main Pokédex page showing the list of all 151 Pokémon with search functionality, quick access cards for team and favorites.
 
 ### Search Functionality
-![Search Feature](./screenshots/02-search-pokemon.png)
+<img width="1920" height="914" alt="Screenshot 2025-11-21 164531" src="https://github.com/user-attachments/assets/68e13f20-1088-47fa-8425-17b637c60e1a" />
+
 Real-time search by Pokémon name or number - type "bee" to filter results instantly.
 
 ### Sort & Filter Menu
-![Sort Options](./screenshots/03-sort-menu.png)
+<img width="1920" height="915" alt="Screenshot 2025-11-21 164636" src="https://github.com/user-attachments/assets/02d9c2bf-dfcb-47c5-823e-598847cd63bb" />
+
 Flexible sorting options with 4 different sort methods:
 - ↑↓ Alphabetical ascending
 - ↓↑ Alphabetical descending (currently selected with checkmark)
@@ -151,23 +153,18 @@ Flexible sorting options with 4 different sort methods:
 - ↓ Numeric descending
 
 ### Pokémon Detail View
-![Pokémon Details](./screenshots/04-pokemon-detail.png)
+<img width="1920" height="918" alt="Screenshot 2025-11-21 165026" src="https://github.com/user-attachments/assets/86c17c1a-3af2-4531-86e8-0a809dfea99a" />
+<img width="1920" height="922" alt="Screenshot 2025-11-21 165001" src="https://github.com/user-attachments/assets/a3500706-81f4-4b10-a50e-a3f011e7c074" />
+<img width="1920" height="915" alt="Screenshot 2025-11-21 164941" src="https://github.com/user-attachments/assets/6d98c902-4ef0-46eb-bfd9-bea6dfd0a77b" />
+
 Detailed view of individual Pokémon showing:
 - Pokémon image with color-coded background
 - Height and weight measurements
 - Base stats visualization
 
-### Stats & Types Display
-![Stats Section](./screenshots/05-stats-hexagon.png)
-Comprehensive stats visualization showing:
-- HP, Attack, Defense
-- Special Attack, Special Defense, Speed
-- Type badges (Poison, Flying)
-- Interactive stats hexagon chart
-- Moves list (first 12 moves shown)
-
 ### Favorites Page
-![Favorites](./screenshots/06-favorites-page.png)
+<img width="1920" height="907" alt="Screenshot 2025-11-21 164733" src="https://github.com/user-attachments/assets/3d926395-f085-4b4b-ae72-787709c0d630" />
+
 Dedicated favorites page displaying:
 - Heart icon with title "Favorite Pokémon"
 - Count of saved favorites (2 Pokémon)
@@ -175,7 +172,7 @@ Dedicated favorites page displaying:
 - Quick remove from favorites option
 
 ### Team Page
-![Team Page](./screenshots/07-team-page.png)
+<img width="1920" height="911" alt="Screenshot 2025-11-21 164828" src="https://github.com/user-attachments/assets/3af2b621-184e-425e-b444-017a4cd1b0cf" />
 Team builder page showing:
 - ⭐ "Your Team" header with Pokémon count (2/6)
 - Clear Team button to remove all members
@@ -184,15 +181,7 @@ Team builder page showing:
 - Type badges for each team member
 - Team Summary section with stats
 
-### Team Management
-![Team Management](./screenshots/08-team-management.png)
-Complete team building interface featuring:
-- Multiple Pokémon in team slots
-- Slot badges showing team position
-- Remove buttons on hover for each member
-- Team strength calculation
-- Available slots counter
-- Summary statistics (Total, Available, Strength %)## �🔌 API Endpoints
+
 
 ### Pokemon Endpoints
 ```
