@@ -130,7 +130,67 @@ npm run preview
 - View team summary with stats
 - Persistent storage using localStorage
 
-## 🔌 API Endpoints
+## � Screenshots
+
+### Home Page - Browse Pokémon
+![Browse Pokémon](./screenshots/01-browse-pokemon.png)
+The main Pokédex page showing the list of all 151 Pokémon with search functionality, quick access cards for team and favorites.
+
+### Search Functionality
+![Search Feature](./screenshots/02-search-pokemon.png)
+Real-time search by Pokémon name or number - type "bee" to filter results instantly.
+
+### Sort & Filter Menu
+![Sort Options](./screenshots/03-sort-menu.png)
+Flexible sorting options with 4 different sort methods:
+- ↑↓ Alphabetical ascending
+- ↓↑ Alphabetical descending (currently selected with checkmark)
+- ↑ Numeric ascending
+- ↓ Numeric descending
+
+### Pokémon Detail View
+![Pokémon Details](./screenshots/04-pokemon-detail.png)
+Detailed view of individual Pokémon showing:
+- Pokémon image with color-coded background
+- Height and weight measurements
+- Base stats visualization
+
+### Stats & Types Display
+![Stats Section](./screenshots/05-stats-hexagon.png)
+Comprehensive stats visualization showing:
+- HP, Attack, Defense
+- Special Attack, Special Defense, Speed
+- Type badges (Poison, Flying)
+- Interactive stats hexagon chart
+- Moves list (first 12 moves shown)
+
+### Favorites Page
+![Favorites](./screenshots/06-favorites-page.png)
+Dedicated favorites page displaying:
+- Heart icon with title "Favorite Pokémon"
+- Count of saved favorites (2 Pokémon)
+- Grid view with Pokémon cards
+- Quick remove from favorites option
+### Team Page
+![Team Page](./screenshots/07-team-page.png)
+Team builder page showing:
+- ⭐ "Your Team" header with Pokémon count (2/6)
+- Clear Team button to remove all members
+- Team cards with slot numbers (1, 2, etc.)
+- Pokémon images displaying correctly
+- Type badges for each team member
+- Team Summary section with stats
+
+### Team Management
+![Team Management](./screenshots/08-team-management.png)
+Complete team building interface featuring:
+- Multiple Pokémon in team slots
+- Slot badges showing team position
+- Remove buttons on hover for each member
+- Team strength calculation
+- Available slots counter
+- Summary statistics (Total, Available, Strength %)
+## �🔌 API Endpoints
 
 ### Pokemon Endpoints
 ```
@@ -282,10 +342,6 @@ MIT License - see LICENSE file for details
 - Check internet connection for PokeAPI
 - Verify image URLs in network tab
 - Clear browser cache
-
-## 📞 Support
-
-For issues or questions, please create an issue in the repository or contact the development team.
 
 ---
 

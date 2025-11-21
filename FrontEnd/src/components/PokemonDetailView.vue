@@ -17,7 +17,7 @@
       </div>
 
       <!-- Content -->
-      <div v-else class="detail-view-body">
+      <div v-else-if="currentPokemon" class="detail-view-body">
         <!-- Header -->
         <div class="detail-header">
           <div>
@@ -171,7 +171,7 @@ const toggleFavorite = () => {
       id: currentPokemon.value.id,
       name: currentPokemon.value.name,
       number: currentPokemon.value.id,
-      image: currentPokemon.value.image,
+      image: getPokemonImage(currentPokemon.value),
       types: currentPokemon.value.types.map((t) => t.type.name),
     }
     favoritesStore.addFavorite(pokemon)
@@ -184,7 +184,7 @@ const addToTeam = () => {
     id: currentPokemon.value.id,
     name: currentPokemon.value.name,
     number: currentPokemon.value.id,
-    image: currentPokemon.value.image,
+    image: getPokemonImage(currentPokemon.value),
     types: currentPokemon.value.types.map((t) => t.type.name),
   }
   teamStore.addToTeam(pokemon)

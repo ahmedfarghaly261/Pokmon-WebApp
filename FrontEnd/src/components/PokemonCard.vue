@@ -5,7 +5,7 @@
     @click="$emit('select', pokemon)"
   >
     <div class="pokemon-card-image">
-      <img :src="pokemon.image || 'https://via.placeholder.com/200'" :alt="pokemon.name" />
+      <img :src="getPokemonImage(pokemon)" :alt="pokemon.name" />
       <span class="pokemon-card-number">#{{ pokemon.number?.toString().padStart(3, '0') }}</span>
     </div>
     <div class="pokemon-card-header">
@@ -43,6 +43,17 @@ const formatName = (name: string) => {
   return name
     ? name.charAt(0).toUpperCase() + name.slice(1).replace(/-/g, ' ')
     : ''
+}
+
+const getPokemonImage = (pokemon: any) => {
+  // Try different image sources in order of preference
+  if (pokemon.image) return pokemon.image
+  if (pokemon.sprites?.front_default) return pokemon.sprites.front_default
+  if (pokemon.sprites?.front_shiny) return pokemon.sprites.front_shiny
+  if (pokemon.sprites?.other?.['official-artwork']?.front_default) {
+    return pokemon.sprites.other['official-artwork'].front_default
+  }
+  return 'https://via.placeholder.com/200?text=No+Image'
 }
 </script>
 
