@@ -171,6 +171,7 @@ Dedicated favorites page displaying:
 - Count of saved favorites (2 Pokémon)
 - Grid view with Pokémon cards
 - Quick remove from favorites option
+
 ### Team Page
 ![Team Page](./screenshots/07-team-page.png)
 Team builder page showing:
@@ -189,8 +190,7 @@ Complete team building interface featuring:
 - Remove buttons on hover for each member
 - Team strength calculation
 - Available slots counter
-- Summary statistics (Total, Available, Strength %)
-## �🔌 API Endpoints
+- Summary statistics (Total, Available, Strength %)## �🔌 API Endpoints
 
 ### Pokemon Endpoints
 ```
