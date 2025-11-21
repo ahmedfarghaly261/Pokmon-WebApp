@@ -4,7 +4,28 @@
     <div class="pokemon-list-main">
       <!-- Header Section -->
       <div class="pokemon-list-header">
-        <h1 class="pokemon-list-title">Pokédex</h1>
+        <div class="header-top">
+          <h1 class="pokemon-list-title">Pokédex</h1>
+          <div class="filter-button-wrapper">
+            <button class="filter-button" @click="toggleFilterMenu" :class="{ active: showFilterMenu }">
+              ⚙️ Filter
+            </button>
+            <!-- Filter Menu Dropdown -->
+            <div v-if="showFilterMenu" class="filter-menu">
+              <div class="filter-menu-title">Sort by</div>
+              <button 
+                v-for="option in sortOptions" 
+                :key="option.value"
+                @click="applySortFilter(option.value)"
+                :class="['filter-menu-item', { active: currentSort === option.value }]"
+              >
+                <span class="sort-icon">{{ option.icon }}</span>
+                <span>{{ option.label }}</span>
+                <span v-if="currentSort === option.value" class="checkmark">✓</span>
+              </button>
+            </div>
+          </div>
+        </div>
         <SearchInput v-model="pokemonStore.searchQuery" />
         
         <!-- Quick Access Cards -->
@@ -46,7 +67,7 @@
         <!-- List -->
         <div v-else class="pokemon-list-grid">
           <div
-            v-for="pokemon in pokemonStore.filteredPokemon"
+            v-for="pokemon in getSortedPokemon"
             :key="pokemon.id"
             class="pokemon-list-item"
             @click="selectPokemon(pokemon)"
@@ -84,7 +105,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { usePokemonStore } from '../stores/pokemonStore'
 import { useFavoritesStore } from '../stores/favoritesStore'
 import { useTeamStore } from '../stores/teamStore'
@@ -98,6 +119,48 @@ const pokemonStore = usePokemonStore()
 const favoritesStore = useFavoritesStore()
 const teamStore = useTeamStore()
 const showDetailModal = ref(false)
+const showFilterMenu = ref(false)
+const currentSort = ref<string>('alphabetical-asc')
+
+const sortOptions = [
+  { value: 'alphabetical-asc', label: 'Alphabetical ascending', icon: '↑↓' },
+  { value: 'alphabetical-desc', label: 'Alphabetical descending', icon: '↓↑' },
+  { value: 'numeric-asc', label: 'Numeric ascending', icon: '↑' },
+  { value: 'numeric-desc', label: 'Numeric descending', icon: '↓' }
+]
+
+const getSortedPokemon = computed(() => {
+  const pokemon = pokemonStore.filteredPokemon
+  const sorted = [...pokemon]
+
+  switch (currentSort.value) {
+    case 'alphabetical-asc':
+      sorted.sort((a, b) => a.name.localeCompare(b.name))
+      break
+    case 'alphabetical-desc':
+      sorted.sort((a, b) => b.name.localeCompare(a.name))
+      break
+    case 'numeric-asc':
+      sorted.sort((a, b) => (a.number || 999) - (b.number || 999))
+      break
+    case 'numeric-desc':
+      sorted.sort((a, b) => (b.number || 0) - (a.number || 0))
+      break
+    default:
+      break
+  }
+
+  return sorted
+})
+
+const toggleFilterMenu = () => {
+  showFilterMenu.value = !showFilterMenu.value
+}
+
+const applySortFilter = (sortValue: string) => {
+  currentSort.value = sortValue
+  showFilterMenu.value = false
+}
 
 const selectPokemon = async (pokemon: PokemonListItem) => {
   try {
@@ -163,12 +226,136 @@ onMounted(loadPokemonList)
   border-bottom: 1px solid #f0f0f0;
 }
 
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
 .pokemon-list-title {
   font-size: 2rem;
   font-weight: 800;
   color: #1a1a1a;
-  margin: 0 0 1rem 0;
+  margin: 0;
   letter-spacing: -0.5px;
+}
+
+.filter-button-wrapper {
+  position: relative;
+}
+
+.filter-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.75rem;
+  border: 2px solid #e0e0e0;
+  background: white;
+  color: #1a1a1a;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.filter-button:hover {
+  background: linear-gradient(135deg, #f5f7fa 0%, #eef1f6 100%);
+  border-color: #FF6B6B;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.15);
+  transform: translateY(-2px);
+}
+
+.filter-button.active {
+  background: linear-gradient(135deg, #FF6B6B 0%, #FF5252 100%);
+  color: white;
+  border-color: #FF6B6B;
+  box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+}
+
+.filter-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.75rem;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 280px;
+  overflow: hidden;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.filter-menu-title {
+  padding: 1rem 1.25rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #f0f0f0;
+  text-transform: uppercase;
+}
+
+.filter-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  border: none;
+  background: white;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #666;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-left: 3px solid transparent;
+}
+
+.filter-menu-item:hover {
+  background: #f8f9fa;
+  color: #FF6B6B;
+  border-left-color: #FF6B6B;
+}
+
+.filter-menu-item.active {
+  background: linear-gradient(90deg, rgba(0, 188, 212, 0.1) 0%, transparent 100%);
+  color: #00BCD4;
+  border-left-color: #00BCD4;
+  font-weight: 700;
+}
+
+.sort-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  font-size: 0.95rem;
+  color: currentColor;
+}
+
+.checkmark {
+  margin-left: auto;
+  color: #00BCD4;
+  font-weight: 800;
+  font-size: 1.1rem;
 }
 
 .quick-access-cards {
@@ -464,6 +651,26 @@ onMounted(loadPokemonList)
 @media (max-width: 768px) {
   .pokemon-list-header {
     padding: 1rem;
+  }
+
+  .header-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .pokemon-list-title {
+    font-size: 1.5rem;
+  }
+
+  .filter-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .filter-menu {
+    right: 0;
+    left: auto;
+    min-width: 100%;
   }
 
   .quick-access-cards {
