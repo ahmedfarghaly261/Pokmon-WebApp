@@ -133,7 +133,9 @@ npm run preview
 ## � Screenshots
 
 ### Home Page - Browse Pokémon
-![Browse Pokémon](./screenshots/01-browse-pokemon.png)
+
+<img width="1920" height="917" alt="Screenshot 2025-11-21 164002" src="https://github.com/user-attachments/assets/7e775abb-5703-4488-8fa0-139af5dbb7d0" />
+
 The main Pokédex page showing the list of all 151 Pokémon with search functionality, quick access cards for team and favorites.
 
 ### Search Functionality
